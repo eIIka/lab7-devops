@@ -5,7 +5,7 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir numpy matplotlib flask
+RUN pip install --no-cache-dir numpy matplotlib flask flask-talisman
 
 COPY main.py .
 
