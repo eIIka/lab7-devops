@@ -6,7 +6,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonifygit remote set-url origin
+from flask_talisman import Talisman
 
 class BridgeLoadModel:
     def __init__(self, length=20.0, q=10000.0, E=2e11, I=0.0054, n=200):
@@ -51,7 +52,9 @@ class BridgeLoadModel:
         self.sigma = self.M * y_max / self.I
 
 # Flask API
+
 app = Flask(__name__)
+Talisman(app) # <--- Додано примусовий HTTPS та базові заголовки безпеки
 
 @app.route('/calculate', methods=['GET'])
 def calculate():
@@ -83,5 +86,6 @@ def calculate():
     })
 
 if __name__ == '__main__':
-    # Запуск сервера на порту 5000
-    app.run(host='0.0.0.0', port=5000)
+    # Використання змінних середовища для порту
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)

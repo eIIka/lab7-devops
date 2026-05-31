@@ -1,15 +1,12 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-check:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,4 +29,13 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t bridge-api .
+          docker build -t devops-api .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'devops-api'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
