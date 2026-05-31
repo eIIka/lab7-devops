@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from flask import Flask, request, jsonifygit remote set-url origin
+from flask import Flask, request, jsonifygit
 from flask_talisman import Talisman
 
 class BridgeLoadModel:
